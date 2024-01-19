@@ -1,0 +1,15 @@
+#Bibliotecas que serão usadas e precisam ser instaladas:
+
+Flask==2.3.0
+Flask-SQLAlchemy==3.1.1
+FLask-Login==0.6.2
+Flask-Cors==3.0.10
+Werkzeug==2.3.0
+
+"""
+Como eu instalo? 
+    - Abrir terminal e entrar na pasta E-Commerce
+    - Comando pip3 install -r requirements.txt
+
+
+"""
