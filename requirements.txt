@@ -11,5 +11,4 @@ Como eu instalo?
     - Abrir terminal e entrar na pasta E-Commerce
     - Comando pip3 install -r requirements.txt
 
-
 """
