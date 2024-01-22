@@ -18,7 +18,10 @@ class Product(db.Model):
 @app.route('/api/products/add', methods=["POST"])
 def add_product():
     data = request.json
-    return data
+    product = Product(name=data["name"], price=data["price"], description=data.get("description", ""))
+    db.session.add(product)
+    db.session.commit()
+    return "Produto cadastrado com sucesso"
 
 #Rotas pelas quais os usuário comunicarão com a API (endereço = endpoint)
 #Definir uma rota raiz (página inicial) e a função que será executada ao requisitar
