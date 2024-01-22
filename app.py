@@ -1,4 +1,4 @@
-from flask import Flask     #importando a Classe Flask da biblioteca flask
+from flask import Flask, request    #importando a Classe Flask da biblioteca flask
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)   #Criar instância do aplicativo flask
@@ -15,6 +15,10 @@ class Product(db.Model):
     price = db.Column(db.Float, )
     description = db.Column(db.Text, nullable=True)
 
+@app.route('/api/products/add', methods=["POST"])
+def add_product():
+    data = request.json
+    return data
 
 #Rotas pelas quais os usuário comunicarão com a API (endereço = endpoint)
 #Definir uma rota raiz (página inicial) e a função que será executada ao requisitar
