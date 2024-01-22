@@ -25,6 +25,21 @@ def add_product():
         return jsonify ({"message": "Product added successfully"})
     return jsonify({"message": "Invalid product data"}), 400
 
+@app.route('/api/products/delete/<int:product_id>', methods=["DELETE"])
+def delete_product(product_id):
+    #Recuperar o produto da base de dados
+    #Verificar se produto existe 
+    #Se esiste, apagar da base de dados
+    #Se não existe, retornar 404 not found
+    product = Product.query.get(product_id)
+    if product: 
+        db.session.delete(product)
+        db.session.commit()
+        return jsonify ({"message": "Product deleted successfully"})
+    return jsonify({"message": "Product not found"}), 404       
+    
+
+
 #Rotas pelas quais os usuário comunicarão com a API (endereço = endpoint)
 #Definir uma rota raiz (página inicial) e a função que será executada ao requisitar
 @app.route('/')
