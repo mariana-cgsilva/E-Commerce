@@ -50,6 +50,29 @@ def get_product_details(product_id):
            }), 200
     return jsonify({"message": "Product not found"}), 404 
 
+@app.route('/api/products/update/<int:product_id>', methods=["PUT"])
+def update_product(product_id):
+    product = Product.query.get(product_id)
+    if not product: 
+        return jsonify({"message": "Product not found"}), 404
+    
+    data = request.json
+    if 'name' in data: 
+        product.name = data['name']
+
+    if 'description' in data: 
+        product.description= data['description']
+
+    if 'price' in data: 
+        product.price = data['price']
+
+    if 'id' in data: 
+        product.id = data['id']
+
+    db.session.commit()
+    return jsonify({"message": "Product updated successfully"}), 200
+
+
 
 #Rotas pelas quais os usuário comunicarão com a API (endereço = endpoint)
 #Definir uma rota raiz (página inicial) e a função que será executada ao requisitar
