@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify  #importando a Classe Flask da biblioteca flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS  #permitir que sistemas de forma acessem o meu sistema swagger
 
 app = Flask(__name__)   #Criar instância do aplicativo flask
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ecommerce.db'
 
 db = SQLAlchemy(app)
+CORS(app)
 
 #Modelagem
 #Produto (id, name, price, description)
