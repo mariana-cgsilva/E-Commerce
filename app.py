@@ -145,6 +145,17 @@ def add_to_cart(product_id):
         return jsonify({'message': 'Item added to the cart successfully'}), 200
     return jsonify({'message': 'Failed to add item to the cart'}), 400
 
+@app.route('/api/cart/remove/<int:product_id>', methods=['DELETE'])
+@login_required
+def remove_from_cart(product_id):
+    #To remove, filter cart with user and product; is going to delete the first item that was found
+    cart_item = CartItem.query.filter_by(user_id=current_user.id, product_id=product_id).first()
+    if cart_item:
+        db.session.delete(cart_item)
+        db.session.commit()
+        return jsonify({'message': 'Item removed from the cart successfully'}), 200
+    return jsonify({'message': 'Failed to remove item from the cart'}), 400  
+
 #Rotas pelas quais os usuário comunicarão com a API (endereço = endpoint)
 #Definir uma rota raiz (página inicial) e a função que será executada ao requisitar
 
