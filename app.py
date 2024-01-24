@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify  #importando a Classe Flask da biblioteca flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS  #permitir que sistemas de forma acessem o meu sistema swagger
+from flask_login import UserMixin
 
 app = Flask(__name__)   #Criar instância do aplicativo flask
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ecommerce.db'
@@ -8,9 +9,14 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ecommerce.db'
 db = SQLAlchemy(app)
 CORS(app)
 
-#Modelagem
-#Produto (id, name, price, description)
+#Modelagem 
+    #User(id, username, password)
+class User(db.Model, UserMixin):                #UserMixin   -> Click "Go to definition" to see class and methods that are already defined
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), nullable=False, unique=True)
+    password = db.Column(db.String(80), nullable=True)
 
+#Produto (id, name, price, description)
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
