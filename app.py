@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify  #importando a Classe Flask da biblioteca flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS  #permitir que sistemas de forma acessem o meu sistema swagger
-from flask_login import UserMixin, login_user, LoginManager, login_required
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user
 
 app = Flask(__name__)   #Criar instância do aplicativo flask
 app.config['SECRET_KEY'] = "minha_chave_123"     #key to enable login
@@ -30,7 +30,7 @@ class Product(db.Model):
 #Autenticação
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get()
+    return User.query.get(int(user_id))
 
 @app.route('/login', methods=["POST"])
 def login():
@@ -42,6 +42,12 @@ def login():
             login_user(user)
             return jsonify({"message": "Logged in successfully"})
     return jsonify({"message": "Unauthorized. Invalid credentials"}), 401
+
+@app.route('/logout', methods=["POST"])
+@login_required          #É requisito o usuário estar logado
+def logout():
+    logout_user()
+    return jsonify({"message": "Logged in successfully"})
 
 @app.route('/api/products/add', methods=["POST"])
 @login_required
