@@ -1,12 +1,15 @@
 from flask import Flask, request, jsonify  #importando a Classe Flask da biblioteca flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS  #permitir que sistemas de forma acessem o meu sistema swagger
-from flask_login import UserMixin
+from flask_login import UserMixin, login_user, LoginManager
 
 app = Flask(__name__)   #Criar instância do aplicativo flask
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ecommerce.db'
 
+login_manager = LoginManager()
 db = SQLAlchemy(app)
+login_manager.init_app(app)
+login_manager.login_view = 'login'
 CORS(app)
 
 #Modelagem 
@@ -30,6 +33,7 @@ def login():
     user = User.query.filter_by(username=data.get("username")).first()
     
     if user and data.get("password") == user.password:
+            login_user(user)
             return jsonify({"message": "Logged in successfully"})
     return jsonify({"message": "Unauthorized. Invalid credentials"}), 401
 
