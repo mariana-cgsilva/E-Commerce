@@ -146,7 +146,7 @@ def add_to_cart(product_id):
 
 #Rotas pelas quais os usuário comunicarão com a API (endereço = endpoint)
 #Definir uma rota raiz (página inicial) e a função que será executada ao requisitar
-'
+
 
 if __name__ == "__main__":
     app.run(debug=True)
