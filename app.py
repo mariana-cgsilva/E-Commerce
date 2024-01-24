@@ -47,7 +47,7 @@ def login():
 @login_required          #É requisito o usuário estar logado
 def logout():
     logout_user()
-    return jsonify({"message": "Logged in successfully"})
+    return jsonify({"message": "Logged out successfully"})
 
 @app.route('/api/products/add', methods=["POST"])
 @login_required
