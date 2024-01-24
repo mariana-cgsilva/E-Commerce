@@ -28,8 +28,10 @@ def login():
     data = request.json
 
     user = User.query.filter_by(username=data.get("username")).first()
-    print(user)
-    return jsonify({"message": "Logged in successfully"})
+    
+    if user: 
+        if data.get("password") == user.password:
+            return jsonify({"message": "Logged in successfully"})
 
 @app.route('/api/products/add', methods=["POST"])
 def add_product():
