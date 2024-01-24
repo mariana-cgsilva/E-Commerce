@@ -4,6 +4,7 @@ from flask_cors import CORS  #permitir que sistemas de forma acessem o meu siste
 from flask_login import UserMixin, login_user, LoginManager
 
 app = Flask(__name__)   #Criar instância do aplicativo flask
+app.config['SECRET_KEY'] = "minha_chave_123"     #key to enable login
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ecommerce.db'
 
 login_manager = LoginManager()
