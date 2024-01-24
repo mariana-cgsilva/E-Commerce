@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify  #importando a Classe Flask da biblioteca flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS  #permitir que sistemas de forma acessem o meu sistema swagger
-from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 
 app = Flask(__name__)   #Criar instância do aplicativo flask
 app.config['SECRET_KEY'] = "minha_chave_123"     #key to enable login
@@ -129,12 +129,24 @@ def get_products():
         product_list.append(product_data)
     return jsonify(product_list)
 
+#Checkout
+@app.route('/api/cart/add/<int:product_id>', methods=['POST'])
+@login_required
+def add_to_cart(product_id):
+    #Usuario
+    user = User.query.get(int(current_user.id))
+    #Produto
+    product = Product.query.get(product_id)
+
+    if user and product: 
+        print(user)
+        print(product)
+        return jsonify({'message': 'Item added to the cart successfully'}), 200
+    return jsonify({'message': 'Failed to add item to the cart'}), 400
 
 #Rotas pelas quais os usuário comunicarão com a API (endereço = endpoint)
 #Definir uma rota raiz (página inicial) e a função que será executada ao requisitar
-@app.route('/')
-def hello_world():
-    return 'Hello World'
+'
 
 if __name__ == "__main__":
     app.run(debug=True)
