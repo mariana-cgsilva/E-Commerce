@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify  #importando a Classe Flask da biblioteca flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS  #permitir que sistemas de forma acessem o meu sistema swagger
-from flask_login import UserMixin, login_user, LoginManager
+from flask_login import UserMixin, login_user, LoginManager, login_required
 
 app = Flask(__name__)   #Criar instância do aplicativo flask
 app.config['SECRET_KEY'] = "minha_chave_123"     #key to enable login
@@ -39,6 +39,7 @@ def login():
     return jsonify({"message": "Unauthorized. Invalid credentials"}), 401
 
 @app.route('/api/products/add', methods=["POST"])
+@login_required
 def add_product():
     data = request.json
     if 'name' in data and 'price' in data: 
@@ -49,6 +50,7 @@ def add_product():
     return jsonify({"message": "Invalid product data"}), 400
 
 @app.route('/api/products/delete/<int:product_id>', methods=["DELETE"])
+@login_required
 def delete_product(product_id):
     #Recuperar o produto da base de dados
     #Verificar se produto existe 
@@ -74,6 +76,7 @@ def get_product_details(product_id):
     return jsonify({"message": "Product not found"}), 404 
 
 @app.route('/api/products/update/<int:product_id>', methods=["PUT"])
+@login_required
 def update_product(product_id):
     product = Product.query.get(product_id)
     if not product: 
