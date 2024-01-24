@@ -32,6 +32,7 @@ def login():
     if user: 
         if data.get("password") == user.password:
             return jsonify({"message": "Logged in successfully"})
+    return jsonify({"message": "Unauthorized. Invalid credentials"}), 401
 
 @app.route('/api/products/add', methods=["POST"])
 def add_product():
