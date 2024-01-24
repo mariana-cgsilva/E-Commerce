@@ -27,6 +27,11 @@ class Product(db.Model):
     price = db.Column(db.Float, )
     description = db.Column(db.Text, nullable=True)
 
+#Autenticação
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get()
+
 @app.route('/login', methods=["POST"])
 def login():
     data = request.json
