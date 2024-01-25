@@ -164,10 +164,13 @@ def view_cart():
     cart_items = user.cart
     cart_content = []
     for cart_item in cart_items:
+        product = Product.query.get(cart_item.product_id)
         cart_content.append({
                                 "id": cart_item.id,
                                 "user_id": cart_item.user_id, 
-                                "product_id": cart_item.product_id
+                                "product_id": cart_item.product_id,
+                                "product_name": product.name,
+                                "product_price": product.price
                              })
     return jsonify(cart_content)
 
