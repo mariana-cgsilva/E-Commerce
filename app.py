@@ -174,6 +174,16 @@ def view_cart():
                              })
     return jsonify(cart_content)
 
+@app.route('/api/cart/checkout', methods=['POST'])
+@login_required
+def checkout_cart():
+    user = User.query.get(int(current_user.id))
+    cart_items = user.cart
+    for cart_item in cart_items:
+        db.session.delete(cart_item)
+        db.session.commit()
+    return jsonify({'message': 'Checkout successful. Cart has been cleared.'})
+
 
 #Rotas pelas quais os usuário comunicarão com a API (endereço = endpoint)
 #Definir uma rota raiz (página inicial) e a função que será executada ao requisitar
