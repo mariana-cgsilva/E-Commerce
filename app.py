@@ -162,9 +162,14 @@ def view_cart():
     #Usuario
     user = User.query.get(int(current_user.id))
     cart_items = user.cart
-    for cart_item in cart_items: 
-        print(cart_item)
-    return jsonify({'message': 'test'})
+    cart_content = []
+    for cart_item in cart_items:
+        cart_content.append({
+                                "id": cart_item.id,
+                                "user_id": cart_item.user_id, 
+                                "product_id": cart_item.product_id
+                             })
+    return jsonify(cart_content)
 
 
 #Rotas pelas quais os usuário comunicarão com a API (endereço = endpoint)
