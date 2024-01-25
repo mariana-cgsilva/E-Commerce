@@ -192,3 +192,8 @@ def checkout_cart():
 if __name__ == "__main__":
     app.run(debug=True)
 
+#use AWS Elastic Beandtalk to enable API on cloud and open it for everyone
+    #use AWS free tier (nivel gratuito da AWS
+    #install https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html to be able to use terminal also
+    #check version: aws --version
+    #search for IAM service -> Users -> Create User -> Name it (windows-asus-ecommerce) -> Attach policies directly -> AdministratorAcess (accesso a todos os recursos e funções) -> Next -> Create user
