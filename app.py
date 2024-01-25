@@ -156,6 +156,17 @@ def remove_from_cart(product_id):
         return jsonify({'message': 'Item removed from the cart successfully'}), 200
     return jsonify({'message': 'Failed to remove item from the cart'}), 400  
 
+@app.route('/api/cart', methods=['GET'])
+@login_required
+def view_cart():
+    #Usuario
+    user = User.query.get(int(current_user.id))
+    cart_items = user.cart
+    for cart_item in cart_items: 
+        print(cart_item)
+    return jsonify({'message': 'test'})
+
+
 #Rotas pelas quais os usuário comunicarão com a API (endereço = endpoint)
 #Definir uma rota raiz (página inicial) e a função que será executada ao requisitar
 
